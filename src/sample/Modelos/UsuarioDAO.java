@@ -41,7 +41,7 @@ public class UsuarioDAO {
         this.tipo = tipo;
     }
 
-    public boolean logear(String nombre, String contra) {
+    public boolean iniciar(String nombre, String contra) {
         nombreUsuario = nombre;
 
         String consulta = "SELECT * " +
@@ -54,18 +54,15 @@ public class UsuarioDAO {
                 contraseña = res.getString("contraseña");
                 tipo = res.getString("tipo");
 
-                System.out.println(contraseña);
-
                 if (res.getString("contraseña").equals(contraseña)) {
                     System.out.println("Contraseaña correcta");
-                        System.out.println("Es admin");
                         return true;
                 } else {
                     System.out.println("Contraseña incorrecta");
                 }
             }
         } catch (Exception e) {
-            System.out.println("Error");
+            System.out.println("Error: "+e);
         }
         return false;
     }

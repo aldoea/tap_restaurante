@@ -10,8 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.Modelos.Conexion;
 import sample.Modelos.UsuarioDAO;
+import sample.Vistas.DashBoard;
+import sample.Vistas.Menu;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,18 +24,24 @@ public class Main extends Application implements EventHandler {
     private Label usuarioL, contraseñaL;
     private TextField usuarioT;
     private PasswordField contraseñaT;
+    private Stage stage;
+    private Scene scene,dashboard;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
-
+        stage = primaryStage;
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 300, 275);
-        primaryStage.setScene(scene);
+        scene = new Scene(grid, 300, 275);
+        stage.setScene(scene);
 
         usuarioL = new Label("Usuario");
         grid.add(usuarioL, 0, 1);
@@ -51,17 +61,18 @@ public class Main extends Application implements EventHandler {
         hbBtn.getChildren().add(acceder);
         grid.add(hbBtn, 1, 4);
 
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWN,this);
         acceder.setOnAction(event->Acceder(usuarioT.getText(),contraseñaT.getText()));
-        primaryStage.show();
+        stage.show();
     }
 
     private void Acceder(String usuario, String contraseña) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        System.out.println(usuarioDAO.logear(usuario,encryptThisString(contraseña)));
-        if (usuarioDAO.logear(usuario, encryptThisString(contraseña))) {
-
+        if (usuarioDAO.iniciar(usuario, encryptThisString(contraseña))) {
+            dashboard = new Scene(new DashBoard().CrearDB(),200,200);
+            stage.setScene(dashboard);
         } else {
-            System.out.println("Error");
+            System.out.println("Error al ingresar");
         }
     }
 
@@ -84,12 +95,7 @@ public class Main extends Application implements EventHandler {
     public void handle(Event event) {
         Conexion.crearConexion();
         if(Conexion.con != null){
-            System.out.println("Succesfull Restaurante");
+            System.out.println(" Conexión Exitosa");
         }
-        System.out.println("error c");
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
