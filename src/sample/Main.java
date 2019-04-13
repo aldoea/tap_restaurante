@@ -8,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.Modelos.Conexion;
@@ -25,7 +24,7 @@ public class Main extends Application implements EventHandler {
     private TextField usuarioT;
     private PasswordField contraseñaT;
     private Stage stage;
-    private Scene scene,dashboard;
+    private Scene scene,dashboard,menu;
 
     public static void main(String[] args) {
         launch(args);
@@ -41,6 +40,7 @@ public class Main extends Application implements EventHandler {
         grid.setPadding(new Insets(25, 25, 25, 25));
 
         scene = new Scene(grid, 300, 275);
+        scene.getStylesheets().add(getClass().getResource("CSS/login.css").toExternalForm());
         stage.setScene(scene);
 
         usuarioL = new Label("Usuario");
@@ -55,18 +55,24 @@ public class Main extends Application implements EventHandler {
         contraseñaT = new PasswordField();
         grid.add(contraseñaT, 1, 2);
 
-        Button acceder = new Button("Acceder");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn.getChildren().add(acceder);
-        grid.add(hbBtn, 1, 4);
+        Button accederA = new Button("Entrar");
+        grid.add(accederA, 1, 4);
+
+        Button accederSU = new Button("Sin usuario");
+        grid.add(accederSU, 1, 5);
 
         stage.addEventHandler(WindowEvent.WINDOW_SHOWN,this);
-        acceder.setOnAction(event->Acceder(usuarioT.getText(),contraseñaT.getText()));
+        accederA.setOnAction(event->AccederA(usuarioT.getText(),contraseñaT.getText()));
+        accederSU.setOnAction(event -> AccederSU());
         stage.show();
     }
 
-    private void Acceder(String usuario, String contraseña) {
+    private void AccederSU() {
+        menu = new Scene(new Menu().CrearMenu());
+        stage.setScene(menu);
+    }
+
+    private void AccederA(String usuario, String contraseña) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (usuarioDAO.iniciar(usuario, encryptThisString(contraseña))) {
             dashboard = new Scene(new DashBoard().CrearDB(),200,200);

@@ -2,7 +2,6 @@ package sample.Vistas;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 public class DashBoard extends Parent {

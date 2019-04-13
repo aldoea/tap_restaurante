@@ -1,4 +1,6 @@
 .root {
+    -fx-body-color: #ffffff;
+    -fx-outer-border: #ffffff;
 }
 
 .label {
