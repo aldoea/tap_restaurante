@@ -24,7 +24,7 @@ public class Main extends Application implements EventHandler {
     private TextField usuarioT;
     private PasswordField contraseñaT;
     private Stage stage;
-    private Scene scene,dashboard,menu;
+    private Scene scene, dashboard, menu;
 
     public static void main(String[] args) {
         launch(args);
@@ -61,21 +61,22 @@ public class Main extends Application implements EventHandler {
         Button accederSU = new Button("Sin usuario");
         grid.add(accederSU, 1, 5);
 
-        stage.addEventHandler(WindowEvent.WINDOW_SHOWN,this);
-        accederA.setOnAction(event->AccederA(usuarioT.getText(),contraseñaT.getText()));
+        stage.addEventHandler(WindowEvent.WINDOW_SHOWN, this);
+        accederA.setOnAction(event -> AccederA(usuarioT.getText(), contraseñaT.getText()));
         accederSU.setOnAction(event -> AccederSU());
         stage.show();
     }
 
     private void AccederSU() {
         menu = new Scene(new Menu().CrearMenu());
+        menu.getStylesheets().add(getClass().getResource("CSS/menu.css").toExternalForm());
         stage.setScene(menu);
     }
 
     private void AccederA(String usuario, String contraseña) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (usuarioDAO.iniciar(usuario, encryptThisString(contraseña))) {
-            dashboard = new Scene(new DashBoard().CrearDB(),200,200);
+            dashboard = new Scene(new DashBoard().CrearDB(), 200, 200);
             stage.setScene(dashboard);
         } else {
             System.out.println("Error al ingresar");
@@ -100,7 +101,7 @@ public class Main extends Application implements EventHandler {
     @Override
     public void handle(Event event) {
         Conexion.crearConexion();
-        if(Conexion.con != null){
+        if (Conexion.con != null) {
             System.out.println(" Conexión Exitosa");
         }
     }
