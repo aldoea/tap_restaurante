@@ -71,6 +71,7 @@ public class Main extends Application implements EventHandler {
         menu = new Scene(new Menu().CrearMenu());
         menu.getStylesheets().add(getClass().getResource("CSS/menu.css").toExternalForm());
         stage.setScene(menu);
+        stage.setMaximized(true);
     }
 
     private void AccederA(String usuario, String contraseña) {
