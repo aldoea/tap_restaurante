@@ -11,7 +11,7 @@ public class OrdenDAO {
     private int idMesa;
     private String estado;
     private String fecha;
-    private double total;
+    private double precio;
     private int idMesero;
 
     public int getIdOrden() {
@@ -46,12 +46,12 @@ public class OrdenDAO {
         this.fecha = fecha;
     }
 
-    public double getTotal() {
-        return total;
+    public double getPrecio() {
+        return precio;
     }
 
     public void setTotal(double total) {
-        this.total = total;
+        this.precio = precio;
     }
 
     public int getIdMesero() {
@@ -77,7 +77,7 @@ public class OrdenDAO {
                 objODAO.idMesa  = res.getInt("idMesa");
                 objODAO.estado     = res.getString("estado");
                 objODAO.fecha = res.getString("fecha");
-                objODAO.total        = res.getDouble("total");
+                objODAO.precio        = res.getDouble("precio");
                 objODAO.idMesero  = res.getInt("idMesero");
                 lista.add(objODAO);
             }
@@ -85,7 +85,6 @@ public class OrdenDAO {
         catch (Exception e){
             System.out.println("Error");
         }
-
         return lista;
     }
 
@@ -95,10 +94,9 @@ public class OrdenDAO {
                 "idMesa," +
                 "estado," +
                 "fecha," +
-                "total," +
+                "precio," +
                 "idMesero)" +
-                " values("+idMesa+",'"+estado+"',"+"'"+fecha+"',"+total+","+idMesero+")";
-        System.out.println(query);
+                " values("+idMesa+",'"+estado+"',"+"'"+fecha+"',"+precio+","+idMesero+")";
         try{
             Statement stmt = Conexion.con.createStatement();
             stmt.execute(query);

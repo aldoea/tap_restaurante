@@ -1315,251 +1315,209 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="330" parent="6" name="articulo_orden"/>
-    <table id="331" parent="6" name="categoria"/>
-    <table id="332" parent="6" name="mesa"/>
-    <table id="333" parent="6" name="mesero"/>
-    <table id="334" parent="6" name="orden"/>
-    <table id="335" parent="6" name="platillo"/>
-    <table id="336" parent="6" name="usuario"/>
-    <column id="337" parent="330" name="idAO">
+    <table id="330" parent="6" name="categoria"/>
+    <table id="331" parent="6" name="mesa"/>
+    <table id="332" parent="6" name="mesero"/>
+    <table id="333" parent="6" name="orden"/>
+    <table id="334" parent="6" name="platillo"/>
+    <table id="335" parent="6" name="usuario"/>
+    <column id="336" parent="330" name="idCategoria">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="330" name="idOrden">
-      <Position>2</Position>
-      <DataType>smallint(6)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="339" parent="330" name="idPlatillo">
-      <Position>3</Position>
-      <DataType>smallint(6)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="340" parent="330" name="precio">
-      <Position>4</Position>
-      <DataType>float|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="341" parent="330" name="fk_idOrden">
-      <ColNames>idOrden</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="342" parent="330" name="fk_idPlatillo">
-      <ColNames>idPlatillo</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="343" parent="330" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idAO</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="344" parent="330" name="fk_idOrden">
-      <ColNames>idOrden</ColNames>
-      <RefSchemaName>restaurante</RefSchemaName>
-      <RefTableName>orden</RefTableName>
-      <RefColNames>idOrden</RefColNames>
-    </foreign-key>
-    <foreign-key id="345" parent="330" name="fk_idPlatillo">
-      <ColNames>idPlatillo</ColNames>
-      <RefSchemaName>restaurante</RefSchemaName>
-      <RefTableName>platillo</RefTableName>
-      <RefColNames>idPlatillo</RefColNames>
-    </foreign-key>
-    <column id="346" parent="331" name="idCategoria">
-      <Position>1</Position>
-      <DataType>smallint(6)|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="347" parent="331" name="nombreCategoria">
+    <column id="337" parent="330" name="nombreCategoria">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="348" parent="331" name="PRIMARY">
+    <key id="338" parent="330" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idCategoria</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="349" parent="332" name="idMesa">
+    <column id="339" parent="331" name="idMesa">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="350" parent="332" name="nombreMesa">
+    <column id="340" parent="331" name="nombreMesa">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="332" name="estado">
+    <column id="341" parent="331" name="estado">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="352" parent="332" name="PRIMARY">
+    <key id="342" parent="331" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idMesa</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="353" parent="333" name="idMesero">
+    <column id="343" parent="332" name="idMesero">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="333" name="idUsuario">
+    <column id="344" parent="332" name="idUsuario">
       <Position>2</Position>
       <DataType>smallint(6)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="355" parent="333" name="fk_idUsuario">
+    <index id="345" parent="332" name="fk_idUsuario">
       <ColNames>idUsuario</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="356" parent="333" name="PRIMARY">
+    <key id="346" parent="332" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idMesero</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="357" parent="333" name="fk_idUsuario">
+    <foreign-key id="347" parent="332" name="fk_idUsuario">
       <ColNames>idUsuario</ColNames>
       <RefSchemaName>restaurante</RefSchemaName>
       <RefTableName>usuario</RefTableName>
       <RefColNames>idUsuario</RefColNames>
     </foreign-key>
-    <column id="358" parent="334" name="idOrden">
+    <column id="348" parent="333" name="idOrden">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="334" name="idMesa">
+    <column id="349" parent="333" name="idMesa">
       <Position>2</Position>
       <DataType>smallint(6)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="360" parent="334" name="estado">
+    <column id="350" parent="333" name="estado">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="361" parent="334" name="fecha">
+    <column id="351" parent="333" name="fecha">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="362" parent="334" name="total">
+    <column id="352" parent="333" name="precio">
       <Position>5</Position>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="363" parent="334" name="idMesero">
+    <column id="353" parent="333" name="idMesero">
       <Position>6</Position>
       <DataType>smallint(6)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="364" parent="334" name="fk_idMesa">
+    <index id="354" parent="333" name="fk_idMesa">
       <ColNames>idMesa</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="365" parent="334" name="fk_idMesero">
+    <index id="355" parent="333" name="fk_idMesero">
       <ColNames>idMesero</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="366" parent="334" name="PRIMARY">
+    <key id="356" parent="333" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idOrden</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="367" parent="334" name="fk_idMesa">
+    <foreign-key id="357" parent="333" name="fk_idMesa">
       <ColNames>idMesa</ColNames>
       <RefSchemaName>restaurante</RefSchemaName>
       <RefTableName>mesa</RefTableName>
       <RefColNames>idMesa</RefColNames>
     </foreign-key>
-    <foreign-key id="368" parent="334" name="fk_idMesero">
+    <foreign-key id="358" parent="333" name="fk_idMesero">
       <ColNames>idMesero</ColNames>
       <RefSchemaName>restaurante</RefSchemaName>
       <RefTableName>mesero</RefTableName>
       <RefColNames>idMesero</RefColNames>
     </foreign-key>
-    <column id="369" parent="335" name="idPlatillo">
+    <column id="359" parent="334" name="idPlatillo">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="370" parent="335" name="nombrePlatillo">
+    <column id="360" parent="334" name="nombrePlatillo">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="371" parent="335" name="descripcionPlatillo">
+    <column id="361" parent="334" name="descripcionPlatillo">
       <Position>3</Position>
       <DataType>char(200)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="372" parent="335" name="idCategoria">
+    <column id="362" parent="334" name="idCategoria">
       <Position>4</Position>
       <DataType>smallint(6)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="373" parent="335" name="imagen">
+    <column id="363" parent="334" name="imagen">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="374" parent="335" name="fk_categoria">
+    <column id="364" parent="334" name="precio">
+      <Position>6</Position>
+      <DataType>float|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="365" parent="334" name="fk_categoria">
       <ColNames>idCategoria</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="375" parent="335" name="PRIMARY">
+    <key id="366" parent="334" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idPlatillo</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="376" parent="335" name="fk_categoria">
+    <foreign-key id="367" parent="334" name="fk_categoria">
       <ColNames>idCategoria</ColNames>
       <RefSchemaName>restaurante</RefSchemaName>
       <RefTableName>categoria</RefTableName>
       <RefColNames>idCategoria</RefColNames>
     </foreign-key>
-    <column id="377" parent="336" name="idUsuario">
+    <column id="368" parent="335" name="idUsuario">
       <Position>1</Position>
       <DataType>smallint(6)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="378" parent="336" name="nombreUsuario">
+    <column id="369" parent="335" name="nombreUsuario">
       <Position>2</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="379" parent="336" name="contraseña">
+    <column id="370" parent="335" name="contraseña">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="380" parent="336" name="tipo">
+    <column id="371" parent="335" name="tipo">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="381" parent="336" name="PRIMARY">
+    <key id="372" parent="335" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idUsuario</ColNames>
       <Primary>1</Primary>

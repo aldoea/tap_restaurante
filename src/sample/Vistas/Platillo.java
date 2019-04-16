@@ -1,5 +1,8 @@
 package sample.Vistas;
 
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -10,23 +13,32 @@ import javafx.scene.layout.VBox;
 import sample.Modelos.OrdenDAO;
 import sample.Modelos.PlatilloDAO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Platillo {
-    private VBox vBox;
+    private VBox vBox, vBox1;
     private Label titulo;
     private Button agregar;
     private ArrayList<PlatilloDAO> platilloDAOS;
     private OrdenDAO objODAO;
-    public TableView<OrdenDAO> tbvOrden;
+    private TableView<OrdenDAO> tbvOrden;
     private ScrollPane scroll;
+    private ObservableList<OrdenDAO> ordenes;
+    public static EventType<PlatilloEvent> ITEM_ADD = new EventType("item_add");
+
+
+    public Platillo(ObservableList<OrdenDAO> ordenes){
+        this.ordenes = ordenes;
+    }
 
     public VBox CPlatillo(int categoria) {
         scroll = new ScrollPane();
-        VBox vBox1 = new VBox();
+        vBox1 = new VBox();
         HBox hBox = new HBox();
+        //int i;
         platilloDAOS = new PlatilloDAO().seleccionar(categoria);
-        for (int i = 0; i < platilloDAOS.size(); i++) {
+        for (int i=0; i < platilloDAOS.size(); i++) {
             titulo = new Label(platilloDAOS.get(i).getNombrePlatillo());
             String ruta = platilloDAOS.get(i).getImagen();
             Image imagen = new Image(getClass().getResourceAsStream(ruta));
@@ -36,7 +48,7 @@ public class Platillo {
             agregar = new Button("Agregar");
             agregar.setOnAction(event -> AgregarPedido());
             vBox = new VBox();
-            vBox.getChildren().addAll(titulo, imageView, agregar);
+            vBox.getChildren().addAll(titulo,imageView, agregar);
             vBox.setPadding(new Insets(5, 5, 5, 5));
             hBox.getChildren().add(vBox);
             hBox.setPadding(new Insets(5, 5, 5, 5));
@@ -47,19 +59,21 @@ public class Platillo {
     }
 
     private void AgregarPedido() {
-
+        System.out.println(agregar.getId());
         objODAO = new OrdenDAO();
         objODAO.setIdMesa(1);
         objODAO.setEstado("Abierto");
-        objODAO.setFecha("2011-03-11");
+        objODAO.setFecha(LocalDate.now()+"");
         objODAO.setTotal(10);
         objODAO.setIdMesero(1);
         objODAO.insertar();
-        tbvOrden.setItems(objODAO.seleccionar());
+        vBox1.fireEvent(new PlatilloEvent(ITEM_ADD));
         tbvOrden.refresh();
     }
 
-    public TableView<OrdenDAO> CrearTabla() {
+
+
+    private TableView<OrdenDAO> CrearTabla() {
         tbvOrden = new TableView<>();
 
         TableColumn<OrdenDAO, Integer> tbcIdOrden = new TableColumn<>("ID");
@@ -80,10 +94,16 @@ public class Platillo {
         TableColumn<OrdenDAO, Integer> tbcIdMesero = new TableColumn<>("Mesero");
         tbcIdMesero.setCellValueFactory(new PropertyValueFactory<>("idMesero"));
 
-
         tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero);
-        tbvOrden.setItems(new OrdenDAO().seleccionar());
+        tbvOrden.setItems(ordenes);
 
         return tbvOrden;
+    }
+}
+
+class PlatilloEvent extends Event{
+
+    public PlatilloEvent(EventType<? extends Event> eventType) {
+        super(eventType);
     }
 }
