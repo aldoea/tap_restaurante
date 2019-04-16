@@ -13,6 +13,19 @@ public class OrdenDAO {
     private String fecha;
     private double precio;
     private int idMesero;
+    private int idPlatillo;
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public int getIdPlatillo() {
+        return idPlatillo;
+    }
+
+    public void setIdPlatillo(int idPlatillo) {
+        this.idPlatillo = idPlatillo;
+    }
 
     public int getIdOrden() {
         return idOrden;
@@ -73,6 +86,7 @@ public class OrdenDAO {
             ResultSet res = stmt.executeQuery(consulta);
             while(res.next()){
                 objODAO = new OrdenDAO();
+                objODAO.idPlatillo = res.getInt("idPlatillo");
                 objODAO.idOrden   = res.getInt("idOrden");
                 objODAO.idMesa  = res.getInt("idMesa");
                 objODAO.estado     = res.getString("estado");
@@ -95,13 +109,36 @@ public class OrdenDAO {
                 "estado," +
                 "fecha," +
                 "precio," +
-                "idMesero)" +
-                " values("+idMesa+",'"+estado+"',"+"'"+fecha+"',"+precio+","+idMesero+")";
+                "idMesero," +
+                "idPlatillo)" +
+                " values("+idMesa+",'"+estado+"',"+"'"+fecha+"',"+precio+","+idMesero+","+idPlatillo+")";
         try{
             Statement stmt = Conexion.con.createStatement();
             stmt.execute(query);
         }catch (Exception e) {
             System.err.println("An error happens " + e.toString());
+        }
+    }
+
+    public void eliminar() {
+        String query = "DELETE FROM orden WHERE idOrden = "+idOrden;
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            stmt.execute(query);
+        }catch (Exception e) {
+            System.err.println("An error happens" + e.toString());
+        }
+
+        seleccionar();
+    }
+
+    public void Cobrar() {
+        String query = "SELECT  WHERE idOrden = "+idOrden;
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            stmt.execute(query);
+        }catch (Exception e) {
+            System.err.println("An error happens" + e.toString());
         }
     }
 }

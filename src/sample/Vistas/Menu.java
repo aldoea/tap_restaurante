@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
+import sample.Componentes.ButtonCell;
 import sample.Modelos.CategoriaDAO;
 import sample.Modelos.MesaDAO;
 import sample.Modelos.MeseroDAO;
@@ -17,7 +19,7 @@ import sample.Modelos.OrdenDAO;
 import java.util.ArrayList;
 
 public class Menu extends Parent {
-    private HBox headerHbox;
+    private HBox headerHbox, abajo;
     private BorderPane panel;
     private TabPane tabPane;
     private ArrayList<CategoriaDAO> rCategoriaDAOS;
@@ -35,14 +37,20 @@ public class Menu extends Parent {
     public BorderPane CrearMenu() {
         panel = new BorderPane();
         tabPane = new TabPane();
+        abajo = new HBox();
         CreatTabs();
         panel.setTop(crearHeader());
         panel.setCenter(tabPane);
-        panel.setBottom(CrearTabla());
 
-        panel.getTop().getStyleClass().add("my-header");
-        panel.getCenter().getStyleClass().add("my-body");
-        panel.getBottom().getStyleClass().add("my-footer");
+        HBox opciones = new HBox();
+        Button cobrar = new Button("Terminar Servicio");
+        Label lCobrar = new Label("Cobrar mesa:");
+
+        opciones.getChildren().addAll(lCobrar, mesasCbox, cobrar);
+        cobrar.setOnAction(event -> Cobrar());
+
+        abajo.getChildren().addAll(CrearTabla(),opciones);
+        panel.setBottom(abajo);
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
             public void handle(PlatilloEvent event) {
@@ -54,10 +62,14 @@ public class Menu extends Parent {
         return panel;
     }
 
+    private void Cobrar() {
+        OrdenDAO objO = new OrdenDAO();
+        objO.Cobrar();
+    }
+
     private HBox crearHeader() {
         headerHbox = new HBox();
         tituloMain = new Label("Agregue los platillos");
-        tituloMain.setId("main-header-label");
         mesaLbl = new Label("Seleccionar mesa: ");
         meseroLbl = new Label("Seleccionar mesero: ");
         meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
@@ -91,6 +103,9 @@ public class Menu extends Parent {
         TableColumn<OrdenDAO, Integer> tbcIdMesa = new TableColumn<>("Mesa");
         tbcIdMesa.setCellValueFactory(new PropertyValueFactory<>("idMesa"));
 
+        TableColumn<OrdenDAO, Integer> tbcPlatillo = new TableColumn<>("Platillo");
+        tbcPlatillo.setCellValueFactory(new PropertyValueFactory<>("idPlatillo"));
+
         TableColumn<OrdenDAO, String > tbcEstado = new TableColumn<>("Estado");
         tbcEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
@@ -103,11 +118,17 @@ public class Menu extends Parent {
         TableColumn<OrdenDAO, Integer> tbcIdMesero = new TableColumn<>("Mesero");
         tbcIdMesero.setCellValueFactory(new PropertyValueFactory<>("idMesero"));
 
-        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero);
+        TableColumn<OrdenDAO,String> tbcEliminar = new TableColumn<>("Eliminar");
+        tbcEliminar.setCellFactory(new Callback<TableColumn<OrdenDAO, String>, TableCell<OrdenDAO, String>>() {
+            @Override
+            public TableCell<OrdenDAO, String> call(TableColumn<OrdenDAO, String> param) {
+                return new ButtonCell(1);
+            }
+        });
+
+        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero, tbcEliminar);
         tbvOrden.setItems(ordenes);
 
         return tbvOrden;
     }
-
-
 }

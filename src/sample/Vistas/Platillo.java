@@ -66,6 +66,7 @@ public class Platillo {
 
     private void AgregarPedido() {
         objODAO = new OrdenDAO();
+        objODAO.setIdPlatillo(2);
         objODAO.setIdMesa(1);
         objODAO.setEstado("Abierto");
         objODAO.setFecha(LocalDate.now()+"");
@@ -74,10 +75,6 @@ public class Platillo {
         objODAO.insertar();
         bodyPlatillos.fireEvent(new PlatilloEvent(ITEM_ADD));
     }
-
-
-
-
 }
 
 class PlatilloEvent extends Event{
