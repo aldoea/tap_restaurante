@@ -42,6 +42,12 @@ public class Menu extends Parent {
         panel.setTop(crearHeader());
         panel.setCenter(tabPane);
 
+        panel.setBottom(CrearTabla());
+
+        panel.getTop().getStyleClass().add("my-header");
+        panel.getCenter().getStyleClass().add("my-body");
+        panel.getBottom().getStyleClass().add("my-footer");
+
         HBox opciones = new HBox();
         Button cobrar = new Button("Terminar Servicio");
         Label lCobrar = new Label("Cobrar mesa:");
@@ -70,6 +76,7 @@ public class Menu extends Parent {
     private HBox crearHeader() {
         headerHbox = new HBox();
         tituloMain = new Label("Agregue los platillos");
+        tituloMain.setId("main-header-label");
         mesaLbl = new Label("Seleccionar mesa: ");
         meseroLbl = new Label("Seleccionar mesero: ");
         meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
@@ -118,15 +125,8 @@ public class Menu extends Parent {
         TableColumn<OrdenDAO, Integer> tbcIdMesero = new TableColumn<>("Mesero");
         tbcIdMesero.setCellValueFactory(new PropertyValueFactory<>("idMesero"));
 
-        TableColumn<OrdenDAO,String> tbcEliminar = new TableColumn<>("Eliminar");
-        tbcEliminar.setCellFactory(new Callback<TableColumn<OrdenDAO, String>, TableCell<OrdenDAO, String>>() {
-            @Override
-            public TableCell<OrdenDAO, String> call(TableColumn<OrdenDAO, String> param) {
-                return new ButtonCell(1);
-            }
-        });
 
-        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero, tbcEliminar);
+        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero);
         tbvOrden.setItems(ordenes);
 
         return tbvOrden;
