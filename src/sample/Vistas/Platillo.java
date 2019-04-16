@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import sample.Modelos.OrdenDAO;
 import sample.Modelos.PlatilloDAO;
@@ -17,12 +18,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Platillo {
-    private VBox vBox, vBox1;
-    private Label titulo;
-    private Button agregar;
+    private VBox bodyPlatillos;
     private ArrayList<PlatilloDAO> platilloDAOS;
     private OrdenDAO objODAO;
-    private ScrollPane scroll;
     private ObservableList<OrdenDAO> ordenes;
     public static EventType<PlatilloEvent> ITEM_ADD = new EventType("item_add");
 
@@ -32,29 +30,38 @@ public class Platillo {
     }
 
     public VBox CPlatillo(int categoria) {
-        scroll = new ScrollPane();
-        vBox1 = new VBox();
-        HBox hBox = new HBox();
-        //int i;
+        ScrollPane scrollPlatillos = new ScrollPane();
+        bodyPlatillos = new VBox();
+        HBox platillosHbox = new HBox();
+        platillosHbox.getStyleClass().add("platillos");
         platilloDAOS = new PlatilloDAO().seleccionar(categoria);
+
         for (int i=0; i < platilloDAOS.size(); i++) {
-            titulo = new Label(platilloDAOS.get(i).getNombrePlatillo());
+            VBox platillo = new VBox();
+            VBox contenedorPlatillo = new VBox();
+            Pane platilloImagen = new Pane();
+            Label platilloTitulo = new Label(platilloDAOS.get(i).getNombrePlatillo());
+            Button btnAgregarPlatillo = new Button("Agregar");
             String ruta = platilloDAOS.get(i).getImagen();
-            Image imagen = new Image(getClass().getResourceAsStream(ruta));
-            ImageView imageView = new ImageView(imagen);
-            //imageView.setFitHeight(200);
-            //imageView.setFitWidth(200);
-            agregar = new Button("Agregar");
-            agregar.setOnAction(event -> AgregarPedido());
-            vBox = new VBox();
-            vBox.getChildren().addAll(titulo,imageView, agregar);
-            vBox.setPadding(new Insets(5, 5, 5, 5));
-            hBox.getChildren().add(vBox);
-            hBox.setPadding(new Insets(5, 5, 5, 5));
+
+            platillo.getStyleClass().add("vbox-platillo");
+            contenedorPlatillo.getStyleClass().add("platillo-container");
+            platilloTitulo.getStyleClass().add("platillo-titulo");
+            platilloImagen.getStyleClass().add("platillo-imagen");
+            platilloImagen.setStyle("-fx-background-image: url(" + ruta +  ")");
+            btnAgregarPlatillo.getStyleClass().addAll("button", "primary", "btn-anadir");
+
+            btnAgregarPlatillo.setOnAction(event -> AgregarPedido());
+
+            contenedorPlatillo.getChildren().addAll(platilloImagen, platilloTitulo, btnAgregarPlatillo);
+            platillo.getChildren().add(contenedorPlatillo);
+            platillosHbox.getChildren().add(platillo);
         }
-        scroll.setContent(hBox);
-        vBox1.getChildren().addAll(scroll);
-        return vBox1;
+        scrollPlatillos.setFitToWidth(true);
+        scrollPlatillos.setFitToHeight(true);
+        scrollPlatillos.setContent(platillosHbox);
+        bodyPlatillos.getChildren().addAll(scrollPlatillos);
+        return bodyPlatillos;
     }
 
     private void AgregarPedido() {
@@ -65,7 +72,7 @@ public class Platillo {
         objODAO.setTotal(10);
         objODAO.setIdMesero(1);
         objODAO.insertar();
-        vBox1.fireEvent(new PlatilloEvent(ITEM_ADD));
+        bodyPlatillos.fireEvent(new PlatilloEvent(ITEM_ADD));
     }
 
 

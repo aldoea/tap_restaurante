@@ -39,6 +39,10 @@ public class Menu extends Parent {
         panel.setTop(crearHeader());
         panel.setCenter(tabPane);
         panel.setBottom(CrearTabla());
+
+        panel.getTop().getStyleClass().add("my-header");
+        panel.getCenter().getStyleClass().add("my-body");
+        panel.getBottom().getStyleClass().add("my-footer");
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
             public void handle(PlatilloEvent event) {
@@ -53,6 +57,7 @@ public class Menu extends Parent {
     private HBox crearHeader() {
         headerHbox = new HBox();
         tituloMain = new Label("Agregue los platillos");
+        tituloMain.setId("main-header-label");
         mesaLbl = new Label("Seleccionar mesa: ");
         meseroLbl = new Label("Seleccionar mesero: ");
         meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
