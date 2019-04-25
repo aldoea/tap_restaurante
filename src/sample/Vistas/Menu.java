@@ -2,23 +2,24 @@ package sample.Vistas;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.Componentes.ButtonCell;
+import sample.Login;
 import sample.Modelos.CategoriaDAO;
 import sample.Modelos.MesaDAO;
 import sample.Modelos.MeseroDAO;
 import sample.Modelos.OrdenDAO;
-
 import java.util.ArrayList;
 
-public class Menu extends Parent {
+public class Menu implements EventHandler {
     private HBox headerHbox, abajo;
     private BorderPane panel;
     private TabPane tabPane;
@@ -33,8 +34,11 @@ public class Menu extends Parent {
     private ComboBox<ObservableList<MeseroDAO>> meserosCbox;
     private ComboBox<ObservableList<MesaDAO>> mesasCbox;
     private TableView<OrdenDAO> tbvOrden;
+    private Stage nStage;
+    private Scene scene;
 
-    public BorderPane CrearMenu() {
+    public Menu(Stage stage) {
+        this.nStage = stage;
         panel = new BorderPane();
         tabPane = new TabPane();
         abajo = new HBox();
@@ -65,7 +69,9 @@ public class Menu extends Parent {
             }
         });
 
-        return panel;
+        scene = new Scene(panel, 500, 500);
+        nStage.setScene(scene);
+        nStage.show();
     }
 
     private void Cobrar() {
@@ -78,11 +84,16 @@ public class Menu extends Parent {
         tituloMain = new Label("Agregue los platillos");
         tituloMain.setId("main-header-label");
         mesaLbl = new Label("Seleccionar mesa: ");
+        regresarBtn.setOnAction(event -> Regresar());
         meseroLbl = new Label("Seleccionar mesero: ");
         meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
         mesasCbox = new ComboBox<ObservableList<MesaDAO>>();
         headerHbox.getChildren().addAll(regresarBtn, tituloMain, meseroLbl, meserosCbox, mesaLbl, mesasCbox);
         return headerHbox;
+    }
+
+    private void Regresar() {
+        new Login(nStage);
     }
 
     public void CreatTabs() {
@@ -125,10 +136,22 @@ public class Menu extends Parent {
         TableColumn<OrdenDAO, Integer> tbcIdMesero = new TableColumn<>("Mesero");
         tbcIdMesero.setCellValueFactory(new PropertyValueFactory<>("idMesero"));
 
+        TableColumn<OrdenDAO, String> tbcEliminar = new TableColumn<>("Eliminar");
+        tbcEliminar.setCellFactory(new Callback<TableColumn<OrdenDAO, String>, TableCell<OrdenDAO, String>>() {
+            @Override
+            public TableCell<OrdenDAO, String> call(TableColumn<OrdenDAO, String> param) {
+                return new ButtonCell(1);
+            }
+        });
 
-        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero);
+        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero, tbcEliminar);
         tbvOrden.setItems(ordenes);
 
         return tbvOrden;
+    }
+
+    @Override
+    public void handle(Event event) {
+
     }
 }
