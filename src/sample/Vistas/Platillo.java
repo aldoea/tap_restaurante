@@ -3,11 +3,7 @@ package sample.Vistas;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventType;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -63,6 +59,8 @@ public class Platillo {
         scrollPlatillos.setFitToHeight(true);
         scrollPlatillos.setContent(platillosHbox);
         bodyPlatillos.getChildren().addAll(scrollPlatillos);
+        scrollPlatillos.setVmax(0);
+        scrollPlatillos.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return bodyPlatillos;
     }
 

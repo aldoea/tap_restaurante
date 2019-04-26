@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -28,7 +29,7 @@ public class Menu implements EventHandler {
     private ObservableList<OrdenDAO> ordenes = FXCollections.observableArrayList();
     private ObservableList<MesaDAO> mesas = FXCollections.observableArrayList();
     private ObservableList<MeseroDAO> meseros = FXCollections.observableArrayList();
-    private Button regresarBtn = new Button("<--");
+    private Button regresarBtn = new Button();
     private Label tituloMain;
     private Label meseroLbl, mesaLbl;
     private ComboBox<ObservableList<MeseroDAO>> meserosCbox;
@@ -69,8 +70,9 @@ public class Menu implements EventHandler {
             }
         });
 
-        scene = new Scene(panel, 500, 500);
+        scene = new Scene(panel);
         nStage.setScene(scene);
+        nStage.setFullScreen(true);
         scene.getStylesheets().add(getClass().getResource("../CSS/menu.css").toExternalForm());
         nStage.show();
     }
@@ -85,6 +87,7 @@ public class Menu implements EventHandler {
         tituloMain = new Label("Agregue los platillos");
         tituloMain.setId("main-header-label");
         mesaLbl = new Label("Seleccionar mesa: ");
+        regresarBtn.setStyle("-fx-background-image: url(/sample/Imagenes/Otras/left-arrow.png); -fx-pref-width: 64px; -fx-pref-height: 64px;");
         regresarBtn.setOnAction(event -> Regresar());
         meseroLbl = new Label("Seleccionar mesero: ");
         meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
