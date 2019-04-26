@@ -48,7 +48,8 @@ public class Platillo {
             contenedorPlatillo.getStyleClass().add("platillo-container");
             platilloTitulo.getStyleClass().add("platillo-titulo");
             platilloImagen.getStyleClass().add("platillo-imagen");
-            platilloImagen.setStyle("-fx-background-image:url('" + ruta + "')");
+            String cadena = "\"" + ruta + "\"";
+            platilloImagen.setStyle("-fx-background-image: url(" + cadena + ")");
             System.out.println(platilloImagen.getStyle());
             btnAgregarPlatillo.getStyleClass().addAll("button", "primary", "btn-anadir");
 

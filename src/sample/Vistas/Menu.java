@@ -71,6 +71,7 @@ public class Menu implements EventHandler {
 
         scene = new Scene(panel, 500, 500);
         nStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("../CSS/menu.css").toExternalForm());
         nStage.show();
     }
 
