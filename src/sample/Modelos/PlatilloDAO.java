@@ -83,7 +83,7 @@ public class PlatilloDAO {
                 lista.add(objPDAO);
             }
         } catch (Exception e) {
-            System.out.println("Error PlatilloDAO");
+            System.out.println("Error seleccionarPlatillo");
         }
 
         return lista;
@@ -107,10 +107,25 @@ public class PlatilloDAO {
                 objPDAO.precio = res.getInt("precio");
             }
         } catch (Exception e) {
-            System.out.println("Error PlatilloDAO");
+            System.out.println("Error sPlatillo");
         }
 
         return objPDAO;
+    }
+
+    public String nombre(int id) {
+
+        PlatilloDAO objPDAO = null;
+        String consulta = "SELECT nombrePlatillo FROM platillo WHERE idPlatillo = " + id;
+        try {
+            Statement stmt = Conexion.con.createStatement();
+            ResultSet res = stmt.executeQuery(consulta);
+            return res.getString("nombrePlatillo");
+        } catch (Exception e) {
+            System.out.println("Error nombrePlatillo ");
+        }
+
+        return null;
     }
 }
 

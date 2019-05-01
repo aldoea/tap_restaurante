@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -32,14 +31,14 @@ public class Menu implements EventHandler {
     private Button regresarBtn = new Button();
     private Label tituloMain;
     private Label meseroLbl, mesaLbl;
-    private ComboBox<ObservableList<MeseroDAO>> meserosCbox;
-    private ComboBox<ObservableList<MesaDAO>> mesasCbox;
+    public ComboBox meserosCbox, mesasCbox, mesasCCbox;
     private TableView<OrdenDAO> tbvOrden;
     private Stage nStage;
     private Scene scene;
 
     public Menu(Stage stage) {
         this.nStage = stage;
+        llenarCombos();
         panel = new BorderPane();
         tabPane = new TabPane();
         abajo = new HBox();
@@ -57,7 +56,7 @@ public class Menu implements EventHandler {
         Button cobrar = new Button("Terminar Servicio");
         Label lCobrar = new Label("Cobrar mesa:");
 
-        opciones.getChildren().addAll(lCobrar, mesasCbox, cobrar);
+        opciones.getChildren().addAll(lCobrar, mesasCCbox, cobrar);
         cobrar.setOnAction(event -> Cobrar());
 
         abajo.getChildren().addAll(CrearTabla(),opciones);
@@ -79,7 +78,11 @@ public class Menu implements EventHandler {
 
     private void Cobrar() {
         OrdenDAO objO = new OrdenDAO();
-        objO.Cobrar();
+        System.out.println(objO.ticket(mesasCCbox.getSelectionModel().getSelectedIndex() + 1));
+        //objO.total(mesasCCbox.getSelectionModel().getSelectedIndex()+1);
+        objO.Cobrar(mesasCCbox.getSelectionModel().getSelectedIndex() + 1);
+        ordenes.clear();
+        ordenes.addAll(new OrdenDAO().seleccionar());
     }
 
     private HBox crearHeader() {
@@ -90,8 +93,6 @@ public class Menu implements EventHandler {
         regresarBtn.setStyle("-fx-background-image: url(/sample/Imagenes/Otras/left-arrow.png); -fx-pref-width: 64px; -fx-pref-height: 64px;");
         regresarBtn.setOnAction(event -> Regresar());
         meseroLbl = new Label("Seleccionar mesero: ");
-        meserosCbox = new ComboBox<ObservableList<MeseroDAO>>();
-        mesasCbox = new ComboBox<ObservableList<MesaDAO>>();
         headerHbox.getChildren().addAll(regresarBtn, tituloMain, meseroLbl, meserosCbox, mesaLbl, mesasCbox);
         return headerHbox;
     }
@@ -110,7 +111,7 @@ public class Menu implements EventHandler {
             tab.setStyle("-fx-border-color: darkgray;");
             tab.setText(rCategoriaDAOS.get(i).getNombreCategoria());
             tab.closableProperty().setValue(false);
-            tab.setContent(new Platillo(ordenes).CPlatillo(i + 1));
+            tab.setContent(new Platillo(ordenes, meserosCbox, mesasCbox).CPlatillo(i + 1));
             tabPane.getTabs().add(tab);
         }
         ordenes.addAll(new OrdenDAO().seleccionar());
@@ -135,7 +136,7 @@ public class Menu implements EventHandler {
         tbcfecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
 
         TableColumn<OrdenDAO, Double> tbcTotal = new TableColumn<>("Total");
-        tbcTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+        tbcTotal.setCellValueFactory(new PropertyValueFactory<>("precio"));
 
         TableColumn<OrdenDAO, Integer> tbcIdMesero = new TableColumn<>("Mesero");
         tbcIdMesero.setCellValueFactory(new PropertyValueFactory<>("idMesero"));
@@ -144,11 +145,11 @@ public class Menu implements EventHandler {
         tbcEliminar.setCellFactory(new Callback<TableColumn<OrdenDAO, String>, TableCell<OrdenDAO, String>>() {
             @Override
             public TableCell<OrdenDAO, String> call(TableColumn<OrdenDAO, String> param) {
-                return new ButtonCell(1);
+                return new ButtonCell(1, ordenes);
             }
         });
 
-        tbvOrden.getColumns().addAll(tbcIdOrden, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero, tbcEliminar);
+        tbvOrden.getColumns().addAll(tbcIdOrden, tbcPlatillo, tbcIdMesa, tbcEstado, tbcfecha, tbcTotal, tbcIdMesero, tbcEliminar);
         tbvOrden.setItems(ordenes);
 
         return tbvOrden;
@@ -157,5 +158,17 @@ public class Menu implements EventHandler {
     @Override
     public void handle(Event event) {
 
+    }
+
+    private void llenarCombos() {
+        meserosCbox = new ComboBox();
+        meserosCbox.setItems(new MeseroDAO().getMeseros());
+        meserosCbox.getSelectionModel().select(0);
+        mesasCbox = new ComboBox();
+        mesasCbox.setItems(new MesaDAO().getMesas());
+        mesasCbox.getSelectionModel().select(0);
+        mesasCCbox = new ComboBox();
+        mesasCCbox.setItems(new MesaDAO().getMesas());
+        mesasCCbox.getSelectionModel().select(0);
     }
 }

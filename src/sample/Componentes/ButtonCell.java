@@ -1,18 +1,22 @@
 package sample.Componentes;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import sample.Modelos.OrdenDAO;
 
 public class ButtonCell extends TableCell<OrdenDAO, String> {
     private Button celdaBoton;
+    private ObservableList<OrdenDAO> nordenes = FXCollections.observableArrayList();
     private int opc;
 
     OrdenDAO objO;
 
-    public ButtonCell(int opc) {
+    public ButtonCell(int opc, ObservableList<OrdenDAO> ordenes) {
         this.opc = opc;
         if (this.opc == 1) {
+            nordenes = ordenes;
             celdaBoton = new Button("Eliminar");
             celdaBoton.setOnAction(event -> Eliminar());
         }
@@ -21,7 +25,9 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
     public void Eliminar() {
         objO = ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
         objO.eliminar();
-        //ButtonCell.this.getTableView().setItems(objO.seleccionar());
+        nordenes.clear();
+        nordenes.addAll(new OrdenDAO().seleccionar());
+        // ButtonCell.this.getTableView().setItems(nordenes);
         ButtonCell.this.getTableView().refresh();
     }
 

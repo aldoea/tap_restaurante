@@ -19,10 +19,13 @@ public class Platillo {
     private OrdenDAO objODAO;
     private ObservableList<OrdenDAO> ordenes;
     public static EventType<PlatilloEvent> ITEM_ADD = new EventType("item_add");
+    private ComboBox mesaOrden, meseroOrden;
 
 
-    public Platillo(ObservableList<OrdenDAO> ordenes){
+    public Platillo(ObservableList<OrdenDAO> ordenes, ComboBox mesas, ComboBox meseros) {
         this.ordenes = ordenes;
+        this.mesaOrden = mesas;
+        this.meseroOrden = meseros;
     }
 
     public VBox CPlatillo(int categoria) {
@@ -38,18 +41,16 @@ public class Platillo {
             Pane platilloImagen = new Pane();
             Label platilloTitulo = new Label(platilloDAOS.get(i).getNombrePlatillo());
             Button btnAgregarPlatillo = new Button("Agregar");
+            btnAgregarPlatillo.setId(String.valueOf(platilloDAOS.get(i).getIdPlatillo()));
             String ruta = platilloDAOS.get(i).getImagen();
-
             platillo.getStyleClass().add("vbox-platillo");
             contenedorPlatillo.getStyleClass().add("platillo-container");
             platilloTitulo.getStyleClass().add("platillo-titulo");
             platilloImagen.getStyleClass().add("platillo-imagen");
-            String cadena = "\"" + ruta + "\"";
-            platilloImagen.setStyle("-fx-background-image: url(" + cadena + ")");
-            System.out.println(platilloImagen.getStyle());
+            platilloImagen.setStyle("-fx-background-image: url(" + ruta + ");");
             btnAgregarPlatillo.getStyleClass().addAll("button", "primary", "btn-anadir");
 
-            btnAgregarPlatillo.setOnAction(event -> AgregarPedido());
+            btnAgregarPlatillo.setOnAction(event -> AgregarPedido(btnAgregarPlatillo.getId()));
 
             contenedorPlatillo.getChildren().addAll(platilloImagen, platilloTitulo, btnAgregarPlatillo);
             platillo.getChildren().add(contenedorPlatillo);
@@ -64,14 +65,14 @@ public class Platillo {
         return bodyPlatillos;
     }
 
-    private void AgregarPedido() {
+    private void AgregarPedido(String id) {
         objODAO = new OrdenDAO();
-        objODAO.setIdPlatillo(2);
-        objODAO.setIdMesa(1);
+        objODAO.setIdPlatillo(platilloDAOS.get(1).sPlatillo(Integer.parseInt(id)).getIdPlatillo());
+        objODAO.setIdMesa(meseroOrden.getSelectionModel().getSelectedIndex() + 1);
         objODAO.setEstado("Abierto");
         objODAO.setFecha(LocalDate.now()+"");
-        objODAO.setTotal(10);
-        objODAO.setIdMesero(1);
+        objODAO.setPrecio(platilloDAOS.get(1).sPlatillo(Integer.parseInt(id)).getPrecio());
+        objODAO.setIdMesero(mesaOrden.getSelectionModel().getSelectedIndex() + 1);
         objODAO.insertar();
         bodyPlatillos.fireEvent(new PlatilloEvent(ITEM_ADD));
     }

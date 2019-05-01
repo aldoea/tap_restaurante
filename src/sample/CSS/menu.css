@@ -37,7 +37,7 @@
 }
 
 .my-header {
-    -fx-pref-height: 50px;
+    -fx-pref-height: 70px;
     -fx-alignment: center;
     -fx-background-color: rgba(0, 0, 0, .6);
 }

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class OrdenDAO {
     private int idOrden;
@@ -63,9 +64,6 @@ public class OrdenDAO {
         return precio;
     }
 
-    public void setTotal(double total) {
-        this.precio = precio;
-    }
 
     public int getIdMesero() {
         return idMesero;
@@ -132,8 +130,43 @@ public class OrdenDAO {
         seleccionar();
     }
 
-    public void Cobrar() {
-        String query = "SELECT  WHERE idOrden = "+idOrden;
+    public double total(int mesa) {
+        double total = 0;
+        String consulta = "SELECT SUM(precio) as precio FROM orden WHERE idMesa = " + mesa;
+        try {
+            Statement stmt = Conexion.con.createStatement();
+            ResultSet res = stmt.executeQuery(consulta);
+            total = res.getDouble("precio");
+        } catch (Exception e) {
+            System.out.println("Error PlatilloDAO");
+        }
+
+        return total;
+    }
+
+    public String ticket(int mesa) {
+        String consulta = "SELECT *  FROM orden WHERE idMesa = " + mesa;
+        String ticket = "";
+        try {
+            Statement stmt = Conexion.con.createStatement();
+            ResultSet res = stmt.executeQuery(consulta);
+            PlatilloDAO platilloDAO = new PlatilloDAO();
+            ticket = "Ticket Mesa:" + res.getInt("idMesa" + "\n");
+            ticket = ticket + "---------------------------------- \n";
+            while (res.next()) {
+                ticket = ticket + res.getInt("idPlatillo") + " ";
+                ticket = ticket + platilloDAO.nombre(res.getInt("idPlatillo")) + "   ";
+                ticket = ticket + res.getDouble("precio");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error ticket");
+        }
+        return ticket;
+    }
+
+    public void Cobrar(int mesa) {
+        String query = "UPDATE orden set estado = " + "\"Pagado\"" + " WHERE idMesa = " + mesa;
         try{
             Statement stmt = Conexion.con.createStatement();
             stmt.execute(query);
