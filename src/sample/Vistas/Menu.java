@@ -78,8 +78,6 @@ public class Menu implements EventHandler {
 
     private void Cobrar() {
         OrdenDAO objO = new OrdenDAO();
-        System.out.println(objO.ticket(mesasCCbox.getSelectionModel().getSelectedIndex() + 1));
-        //objO.total(mesasCCbox.getSelectionModel().getSelectedIndex()+1);
         objO.Cobrar(mesasCCbox.getSelectionModel().getSelectedIndex() + 1);
         ordenes.clear();
         ordenes.addAll(new OrdenDAO().seleccionar());

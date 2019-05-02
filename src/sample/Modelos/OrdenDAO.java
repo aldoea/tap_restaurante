@@ -136,7 +136,9 @@ public class OrdenDAO {
         try {
             Statement stmt = Conexion.con.createStatement();
             ResultSet res = stmt.executeQuery(consulta);
-            total = res.getDouble("precio");
+            while (res.next()) {
+                total = res.getDouble("precio");
+            }
         } catch (Exception e) {
             System.out.println("Error PlatilloDAO");
         }
@@ -151,14 +153,16 @@ public class OrdenDAO {
             Statement stmt = Conexion.con.createStatement();
             ResultSet res = stmt.executeQuery(consulta);
             PlatilloDAO platilloDAO = new PlatilloDAO();
-            ticket = "Ticket Mesa:" + res.getInt("idMesa" + "\n");
+            ticket = "Ticket Mesa:" + mesa + "\n";
             ticket = ticket + "---------------------------------- \n";
+            ticket = ticket + "ID      Nombre      Precio \n";
             while (res.next()) {
                 ticket = ticket + res.getInt("idPlatillo") + " ";
                 ticket = ticket + platilloDAO.nombre(res.getInt("idPlatillo")) + "   ";
                 ticket = ticket + res.getDouble("precio");
+                ticket = ticket + "\n";
             }
-
+            ticket = ticket + "Total: " + total(mesa);
         } catch (Exception e) {
             System.out.println("Error ticket");
         }
@@ -166,6 +170,7 @@ public class OrdenDAO {
     }
 
     public void Cobrar(int mesa) {
+        System.out.println(ticket(mesa));
         String query = "UPDATE orden set estado = " + "\"Pagado\"" + " WHERE idMesa = " + mesa;
         try{
             Statement stmt = Conexion.con.createStatement();

@@ -120,7 +120,9 @@ public class PlatilloDAO {
         try {
             Statement stmt = Conexion.con.createStatement();
             ResultSet res = stmt.executeQuery(consulta);
-            return res.getString("nombrePlatillo");
+            while (res.next()) {
+                return res.getString("nombrePlatillo");
+            }
         } catch (Exception e) {
             System.out.println("Error nombrePlatillo ");
         }
