@@ -18,6 +18,7 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
         if (this.opc == 1) {
             nordenes = ordenes;
             celdaBoton = new Button("Eliminar");
+            celdaBoton.getStyleClass().add("danger");
             celdaBoton.setOnAction(event -> Eliminar());
         }
     }
@@ -34,7 +35,10 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
     @Override
     protected void updateItem(String s, boolean b) {
         super.updateItem(s, b);
-        if (!b)
+        if (b) {
+            setGraphic(null);
+        } else {
             setGraphic(celdaBoton);
+        }
     }
 }
