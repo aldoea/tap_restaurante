@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OrdenDAO {
@@ -179,5 +180,33 @@ public class OrdenDAO {
         }catch (Exception e) {
             System.err.println("An error happens" + e.toString());
         }
+    }
+
+    public ObservableList<OrdenDAO> OrdenDia() {
+
+        ObservableList<OrdenDAO> lista = FXCollections.observableArrayList();
+        OrdenDAO objODAO = null;
+
+        String consulta = "SELECT * FROM orden where fecha=" + "\"" + LocalDate.now() + "\"";
+        System.out.println(consulta);
+        try {
+            Statement stmt = Conexion.con.createStatement();
+            ResultSet res = stmt.executeQuery(consulta);
+            while (res.next()) {
+                objODAO = new OrdenDAO();
+
+                objODAO.idPlatillo = res.getInt("idPlatillo");
+                objODAO.idOrden = res.getInt("idOrden");
+                objODAO.idMesa = res.getInt("idMesa");
+                objODAO.estado = res.getString("estado");
+                objODAO.fecha = res.getString("fecha");
+                objODAO.precio = res.getDouble("precio");
+                objODAO.idMesero = res.getInt("idMesero");
+                lista.add(objODAO);
+            }
+        } catch (Exception e) {
+            System.out.println("Error orden dia: " + e);
+        }
+        return lista;
     }
 }
