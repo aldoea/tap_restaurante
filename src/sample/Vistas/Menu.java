@@ -37,6 +37,7 @@ public class Menu implements EventHandler {
     private TableView<OrdenDAO> tbvOrden;
     private Stage nStage;
     private Scene scene;
+    private static int contador = 1;
 
     public Menu(Stage stage) {
         this.nStage = stage;
@@ -88,7 +89,8 @@ public class Menu implements EventHandler {
     private void ConsumoA() {
         OrdenDAO objO = new OrdenDAO();
         CrearPDF pdf = new CrearPDF();
-        String nombre = "ticket_" + mesasCCbox.getSelectionModel().getSelectedIndex() + 1 + ".pdf";
+        String nombre = "ticket_" + contador + ".pdf";
+        contador++;
         pdf.crearPDF(nombre, objO.ticket(mesasCCbox.getSelectionModel().getSelectedIndex() + 1));
     }
 
