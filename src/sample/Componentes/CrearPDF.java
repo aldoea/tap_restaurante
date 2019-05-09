@@ -8,15 +8,17 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class JavaPdfHelloWorld {
-    public static void main(String[] args) {
+public class CrearPDF {
         Document document = new Document();
+
+    public void crearPDF(String nombre, String contenido) {
         try {
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("HelloWorld.pdf"));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(nombre));
             document.open();
-            document.add(new Paragraph("A Hello World PDF document."));
+            document.add(new Paragraph(contenido));
             document.close();
             writer.close();
+            System.out.println("Listo pdf");
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {

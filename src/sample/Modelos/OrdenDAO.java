@@ -156,7 +156,7 @@ public class OrdenDAO {
             PlatilloDAO platilloDAO = new PlatilloDAO();
             ticket = "Ticket Mesa:" + mesa + "\n";
             ticket = ticket + "---------------------------------- \n";
-            ticket = ticket + "ID      Nombre      Precio \n";
+            ticket = ticket + "ID - Nombre - Precio \n";
             while (res.next()) {
                 ticket = ticket + res.getInt("idPlatillo") + " ";
                 ticket = ticket + platilloDAO.nombre(res.getInt("idPlatillo")) + "   ";

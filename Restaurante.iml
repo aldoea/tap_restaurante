@@ -11,5 +11,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="javafx-sdk-11.0" level="project" />
     <orderEntry type="library" name="org.jtwig:jtwig-core:5.87.0.RELEASE" level="project" />
+    <orderEntry type="library" name="com.itextpdf.maven:itextdoc:2.0.0" level="project" />
   </component>
 </module>

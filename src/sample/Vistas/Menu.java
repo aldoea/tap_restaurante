@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.Componentes.ButtonCell;
+import sample.Componentes.CrearPDF;
 import sample.Login;
 import sample.Modelos.CategoriaDAO;
 import sample.Modelos.MesaDAO;
@@ -62,7 +63,7 @@ public class Menu implements EventHandler {
         selectMesa.getChildren().addAll(lCobrar, mesasCCbox);
         opciones.getChildren().addAll(selectMesa, cobrar, ticket);
         cobrar.setOnAction(event -> Cobrar());
-        //ticket.setOnAction(event -> ConsumoA());
+        ticket.setOnAction(event -> ConsumoA());
 
         abajo.getChildren().addAll(CrearTabla(),opciones);
         abajo.setPrefHeight(300);
@@ -82,6 +83,13 @@ public class Menu implements EventHandler {
         scene.getStylesheets().add(getClass().getResource("../CSS/bootstrap3.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("../CSS/menu.css").toExternalForm());
         nStage.show();
+    }
+
+    private void ConsumoA() {
+        OrdenDAO objO = new OrdenDAO();
+        CrearPDF pdf = new CrearPDF();
+        String nombre = "ticket_" + mesasCCbox.getSelectionModel().getSelectedIndex() + 1 + ".pdf";
+        pdf.crearPDF(nombre, objO.ticket(mesasCCbox.getSelectionModel().getSelectedIndex() + 1));
     }
 
     private void Cobrar() {
