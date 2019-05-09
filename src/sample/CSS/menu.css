@@ -33,6 +33,9 @@
     -fx-alignment: center-left;
 }
 
+#all-opciones {
+    -fx-alignment: center;
+}
 .btn-regresar {
     -fx-background-image: url(/sample/Imagenes/Otras/left-arrow.png);
     -fx-background-color: transparent;
@@ -108,9 +111,18 @@
     -fx-max-height: 300px;
 }
 
+.cuenta-label {
+    -fx-font-family: 'sans-serif';
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-alignment: left;
+    -fx-wrap-text: true;
+    -fx-text-fill: black;
+}
+
 .cuenta-option-pane {
     -fx-background-color: rgba(243, 242, 255, 0.24);
-    /*-fx-alignment: center;*/
+    -fx-alignment: center;
 }
 
 .vbox-platillo {
