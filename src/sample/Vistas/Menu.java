@@ -53,14 +53,18 @@ public class Menu implements EventHandler {
         panel.getCenter().getStyleClass().add("my-body");
         panel.getBottom().getStyleClass().add("my-footer");
 
+        VBox opcinoesV = new VBox();
         HBox opciones = new HBox();
         Button cobrar = new Button("Terminar Servicio");
         Label lCobrar = new Label("Cobrar mesa:");
+        Button ticket = new Button("Consumo Actual");
 
         opciones.getChildren().addAll(lCobrar, mesasCCbox, cobrar);
+        opcinoesV.getChildren().addAll(opciones, ticket);
         cobrar.setOnAction(event -> Cobrar());
+        ticket.setOnAction(event -> ConsumoA());
 
-        abajo.getChildren().addAll(CrearTabla(),opciones);
+        abajo.getChildren().addAll(CrearTabla(), opcinoesV);
         panel.setBottom(abajo);
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
@@ -76,6 +80,13 @@ public class Menu implements EventHandler {
         scene.getStylesheets().add(getClass().getResource("../CSS/bootstrap3.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("../CSS/menu.css").toExternalForm());
         nStage.show();
+    }
+
+    private void ConsumoA() {
+        OrdenDAO objO = new OrdenDAO();
+        System.out.println(objO.ticket(mesasCCbox.getSelectionModel().getSelectedIndex() + 1));
+        ordenes.clear();
+        ordenes.addAll(new OrdenDAO().seleccionar());
     }
 
     private void Cobrar() {
