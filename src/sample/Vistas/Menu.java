@@ -53,25 +53,20 @@ public class Menu implements EventHandler {
         panel.getCenter().getStyleClass().add("my-body");
         panel.getBottom().getStyleClass().add("my-footer");
 
-        VBox opcinoesV = new VBox();
         HBox opciones = new HBox();
         VBox selectMesa = new VBox();
         Button cobrar = new Button("Terminar Servicio");
-        Label lCobrar = new Label("Seleccionar mesa:");
-        Label lCobrar = new Label("Cobrar mesa:");
         Button ticket = new Button("Consumo Actual");
+        Label lCobrar = new Label("Seleccionar mesa");
 
         selectMesa.getChildren().addAll(lCobrar, mesasCCbox);
-        opciones.getChildren().addAll(selectMesa, cobrar);
-        opciones.getChildren().addAll(lCobrar, mesasCCbox, cobrar);
-        opcinoesV.getChildren().addAll(opciones, ticket);
+        opciones.getChildren().addAll(selectMesa, cobrar, ticket);
         cobrar.setOnAction(event -> Cobrar());
-        ticket.setOnAction(event -> ConsumoA());
+        //ticket.setOnAction(event -> ConsumoA());
 
         abajo.getChildren().addAll(CrearTabla(),opciones);
         abajo.setPrefHeight(300);
         abajo.setMaxHeight(300);
-        abajo.getChildren().addAll(CrearTabla(), opcinoesV);
         panel.setBottom(abajo);
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
