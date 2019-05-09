@@ -95,7 +95,8 @@ public class OrdenDAO {
             }
         }
         catch (Exception e){
-            System.out.println("Error");
+            System.out.println("Error: ");
+            System.out.println(e);
         }
         return lista;
     }

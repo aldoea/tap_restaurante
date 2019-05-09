@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.Componentes.ButtonCell;
@@ -72,6 +73,7 @@ public class Menu implements EventHandler {
         scene = new Scene(panel);
         nStage.setScene(scene);
         nStage.setFullScreen(true);
+        scene.getStylesheets().add(getClass().getResource("../CSS/bootstrap3.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("../CSS/menu.css").toExternalForm());
         nStage.show();
     }
@@ -85,13 +87,35 @@ public class Menu implements EventHandler {
 
     private HBox crearHeader() {
         headerHbox = new HBox();
+        headerHbox.setId("header-content");
+        HBox regresarBox, tituloBox, servicioBox;
+        VBox meseroVBox = new VBox(), mesaVBox = new VBox();
+        // Boton regregresar
+        regresarBtn.getStyleClass().add("btn-regresar");
+        regresarBtn.setOnAction(event -> Regresar());
+        regresarBox = new HBox();
+        regresarBox.getChildren().addAll(regresarBtn);
+        regresarBox.setId("back-button-box");
+        // Titulo
         tituloMain = new Label("Agregue los platillos");
         tituloMain.setId("main-header-label");
-        mesaLbl = new Label("Seleccionar mesa: ");
-        regresarBtn.setStyle("-fx-background-image: url(/sample/Imagenes/Otras/left-arrow.png); -fx-pref-width: 64px; -fx-pref-height: 64px;");
-        regresarBtn.setOnAction(event -> Regresar());
-        meseroLbl = new Label("Seleccionar mesero: ");
-        headerHbox.getChildren().addAll(regresarBtn, tituloMain, meseroLbl, meserosCbox, mesaLbl, mesasCbox);
+        tituloBox = new HBox();
+        tituloBox.getChildren().add(tituloMain);
+        tituloBox.setId("title-box");
+        // Servicio
+        mesaLbl = new Label("Seleccionar mesa");
+        meseroLbl = new Label("Seleccionar mesero");
+        mesaLbl.getStyleClass().add("servicio-label");
+        meseroLbl.getStyleClass().add("servicio-label");
+        meseroVBox.getChildren().addAll(meseroLbl, meserosCbox);
+        mesaVBox.getChildren().addAll(mesaLbl, mesasCbox);
+        meseroVBox.getStyleClass().add("servicio-cb-cont");
+        mesaVBox.getStyleClass().add("servicio-cb-cont");
+        servicioBox = new HBox();
+        servicioBox.getChildren().addAll(meseroVBox, mesaVBox);
+        servicioBox.setId("servicio-box");
+
+        headerHbox.getChildren().addAll(regresarBox, tituloBox, servicioBox);
         return headerHbox;
     }
 
