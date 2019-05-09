@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -136,7 +137,7 @@ public class Menu implements EventHandler {
         ticket.setOnAction(event -> ConsumoA());
 
         Label lMesa = new Label("Seleccionar mesa");
-        lMesa.getStyleClass().add("servicio-label");
+        lMesa.getStyleClass().add("cuenta-label");
 
         selectMesa.getChildren().addAll(lMesa, mesasCCbox);
         selectMesa.setSpacing(5);
@@ -144,8 +145,10 @@ public class Menu implements EventHandler {
         buttonsOpciones.getChildren().addAll(ticket, cobrar);
         buttonsOpciones.setSpacing(30);
         allOpciones.getChildren().addAll(selectMesa, buttonsOpciones);
+        allOpciones.setId("all-opciones");
         allOpcionesContainer.getChildren().add(allOpciones);
         allOpcionesContainer.getStyleClass().add("cuenta-option-pane");
+        HBox.setHgrow(allOpcionesContainer, Priority.ALWAYS);
         abajo.getChildren().addAll(CrearTabla(),allOpcionesContainer);
         abajo.getStyleClass().add("pedidos-info");
         return abajo;
