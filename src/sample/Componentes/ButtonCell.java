@@ -28,8 +28,8 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
         objO.eliminar();
         nordenes.clear();
         nordenes.addAll(new OrdenDAO().seleccionar());
-        // ButtonCell.this.getTableView().setItems(nordenes);
         ButtonCell.this.getTableView().refresh();
+        //ButtonCell.this.getTableView().setItems(nordenes);
     }
 
     @Override
