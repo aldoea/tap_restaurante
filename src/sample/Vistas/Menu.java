@@ -48,28 +48,14 @@ public class Menu implements EventHandler {
         CreatTabs();
         panel.setTop(crearHeader());
         panel.setCenter(tabPane);
-
-        panel.setBottom(CrearTabla());
+        panel.setBottom(crearFooter());
 
         panel.getTop().getStyleClass().add("my-header");
         panel.getCenter().getStyleClass().add("my-body");
         panel.getBottom().getStyleClass().add("my-footer");
 
-        HBox opciones = new HBox();
-        VBox selectMesa = new VBox();
-        Button cobrar = new Button("Terminar Servicio");
-        Button ticket = new Button("Consumo Actual");
-        Label lCobrar = new Label("Seleccionar mesa");
 
-        selectMesa.getChildren().addAll(lCobrar, mesasCCbox);
-        opciones.getChildren().addAll(selectMesa, cobrar, ticket);
-        cobrar.setOnAction(event -> Cobrar());
-        ticket.setOnAction(event -> ConsumoA());
-
-        abajo.getChildren().addAll(CrearTabla(),opciones);
-        abajo.setPrefHeight(300);
-        abajo.setMaxHeight(300);
-        panel.setBottom(abajo);
+        //panel.setBottom(abajo);
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
             public void handle(PlatilloEvent event) {
@@ -133,6 +119,36 @@ public class Menu implements EventHandler {
 
         headerHbox.getChildren().addAll(regresarBox, tituloBox, servicioBox);
         return headerHbox;
+    }
+
+    private HBox crearFooter() {
+        HBox allOpcionesContainer = new HBox();
+        VBox allOpciones = new VBox();
+        VBox selectMesa = new VBox();
+        HBox buttonsOpciones = new HBox();
+        // Button cobrar
+        Button cobrar = new Button("Terminar Servicio");
+        cobrar.getStyleClass().addAll("warning", "lg");
+        cobrar.setOnAction(event -> Cobrar());
+        // Button ticker
+        Button ticket = new Button("Consumo Actual");
+        ticket.getStyleClass().addAll("info", "lg");
+        ticket.setOnAction(event -> ConsumoA());
+
+        Label lMesa = new Label("Seleccionar mesa");
+        lMesa.getStyleClass().add("servicio-label");
+
+        selectMesa.getChildren().addAll(lMesa, mesasCCbox);
+        selectMesa.setSpacing(5);
+        allOpciones.setSpacing(30);
+        buttonsOpciones.getChildren().addAll(ticket, cobrar);
+        buttonsOpciones.setSpacing(30);
+        allOpciones.getChildren().addAll(selectMesa, buttonsOpciones);
+        allOpcionesContainer.getChildren().add(allOpciones);
+        allOpcionesContainer.getStyleClass().add("cuenta-option-pane");
+        abajo.getChildren().addAll(CrearTabla(),allOpcionesContainer);
+        abajo.getStyleClass().add("pedidos-info");
+        return abajo;
     }
 
     private void Regresar() {
