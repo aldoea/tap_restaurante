@@ -60,8 +60,6 @@ public class Platillo {
         scrollPlatillos.setFitToHeight(true);
         scrollPlatillos.setContent(platillosHbox);
         bodyPlatillos.getChildren().addAll(scrollPlatillos);
-        scrollPlatillos.setVmax(0);
-        scrollPlatillos.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         return bodyPlatillos;
     }
 

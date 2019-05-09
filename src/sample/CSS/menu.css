@@ -1,3 +1,10 @@
+.root {
+    -fx-background-image: url("/sample/Imagenes/wood_bg.jpg");
+    -fx-background-size: cover, auto;
+    -fx-background-repeat: stretch, no-repeat;
+    -fx-background-position: center;
+}
+
 #main-header-label {
     -fx-font-family: 'Roboto';
     -fx-font-weight: bolder;
@@ -44,7 +51,7 @@
 
 .servicio-label {
     -fx-font-family: 'sans-serif';
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-alignment: left;
     -fx-wrap-text: true;
@@ -75,14 +82,14 @@
 }
 
 .platillos {
-    -fx-padding: 50px;
+    -fx-padding: 0;
     -fx-alignment: center;
 }
 
 .my-header {
     -fx-pref-height: 70px;
     -fx-alignment: center-left;
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(243, 242, 255, 0.24);
 }
 
 .my-body {
@@ -124,7 +131,7 @@
     -fx-font-family: 'sans-serif';
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-padding: 30px 0 0 50px;
+    -fx-padding: 20px 0 15px 0;
     -fx-text-fill: #292929;
     -fx-text-alignment: center;
     -fx-wrap-text: true;

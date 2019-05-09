@@ -54,13 +54,17 @@ public class Menu implements EventHandler {
         panel.getBottom().getStyleClass().add("my-footer");
 
         HBox opciones = new HBox();
+        VBox selectMesa = new VBox();
         Button cobrar = new Button("Terminar Servicio");
-        Label lCobrar = new Label("Cobrar mesa:");
+        Label lCobrar = new Label("Seleccionar mesa:");
 
-        opciones.getChildren().addAll(lCobrar, mesasCCbox, cobrar);
+        selectMesa.getChildren().addAll(lCobrar, mesasCCbox);
+        opciones.getChildren().addAll(selectMesa, cobrar);
         cobrar.setOnAction(event -> Cobrar());
 
         abajo.getChildren().addAll(CrearTabla(),opciones);
+        abajo.setPrefHeight(300);
+        abajo.setMaxHeight(300);
         panel.setBottom(abajo);
         panel.addEventHandler(Platillo.ITEM_ADD, new EventHandler<PlatilloEvent>() {
             @Override
@@ -130,7 +134,7 @@ public class Menu implements EventHandler {
         for (int i = 0; i < rCategoriaDAOS.size(); i++) {
             Tab tab = new Tab();
             tab.setId(String.valueOf(i));
-            tab.setStyle("-fx-border-color: darkgray;");
+            //tab.setStyle("-fx-border-color: darkgray;");
             tab.setText(rCategoriaDAOS.get(i).getNombreCategoria());
             tab.closableProperty().setValue(false);
             tab.setContent(new Platillo(ordenes, meserosCbox, mesasCbox).CPlatillo(i + 1));
