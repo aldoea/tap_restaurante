@@ -25,6 +25,9 @@ public class Login implements EventHandler {
     private Scene scene;
     private Menu menu;
 
+    public Login() {
+    }
+
     public Login(Stage stage) {
         this.nStage = stage;
         GridPane grid = new GridPane();
