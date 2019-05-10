@@ -1,3 +1,23 @@
+#charts-container {
+    -fx-background-color: skyblue;
+    -fx-max-height: 400px;
+    -fx-alignment: top-center;
+}
+
+#semana-chart-container {
+    -fx-background-color: yellow;
+    -fx-pref-width: 650px;
+    -fx-pref-height: 200px;
+    -fx-alignment: center;
+}
+
+#platillo-chart-container {
+    -fx-background-color: orange;
+    -fx-pref-width: 650px;
+    -fx-pref-height: 200px;
+    -fx-alignment: center;
+}
+
 .root {
     -fx-background-color: seagreen;
 }

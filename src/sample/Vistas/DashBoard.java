@@ -7,6 +7,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class DashBoard {
@@ -27,6 +28,8 @@ public class DashBoard {
     public void CrearUI() {
         dashbParentContainer = new BorderPane();
         dashbParentContainer.setTop(crearMenuBar());
+        dashbParentContainer.setCenter(crearCharts());
+
         mainScene = new Scene(dashbParentContainer);
         mainScene.getStylesheets().add(getClass().getResource("../CSS/bootstrap3.css").toExternalForm());
         mainScene.getStylesheets().add(getClass().getResource("../CSS/dashboard.css").toExternalForm());
@@ -47,6 +50,30 @@ public class DashBoard {
         administradorMenu.getItems().addAll(listadoOrdenesMenuIt, crudMenuIt);
         menuBar.getMenus().add(administradorMenu);
         return menuBar;
+    }
+
+    public HBox crearCharts() {
+        HBox chartsContainer = new HBox();
+        chartsContainer.setId("charts-container");
+        chartsContainer.getChildren().addAll(crearSemanasChart(), crearPlatillosChart());
+        return chartsContainer;
+    }
+
+    private HBox crearSemanasChart() {
+        HBox semanaChartContainer = new HBox();
+        Text dummyText = new Text("Soy el chart de semanas");
+        semanaChartContainer.setId("semana-chart-container");
+        semanaChartContainer.getChildren().add(dummyText);
+        return semanaChartContainer;
+
+    }
+
+    private HBox crearPlatillosChart() {
+        HBox platilloChartContainer = new HBox();
+        Text dummyText = new Text("Soy el chart de platillos");
+        platilloChartContainer.setId("platillo-chart-container");
+        platilloChartContainer.getChildren().add(dummyText);
+        return platilloChartContainer;
     }
 
     private void crudTrigger() {
