@@ -62,8 +62,8 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
 
     public void AA() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Login Dialog");
-        dialog.setHeaderText("Look, a Custom Login Dialog");
+        dialog.setTitle("Autenticación requerida");
+        dialog.setHeaderText("Acción requiere autenticación");
 
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
