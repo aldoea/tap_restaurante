@@ -1,14 +1,16 @@
 package sample.Vistas;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.chart.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.Modelos.dashboardDAO;
+
+import java.util.Calendar;
 
 public class DashBoard {
     private BorderPane dashbParentContainer;
@@ -17,8 +19,6 @@ public class DashBoard {
     private MenuBar menuBar;
     private Menu administradorMenu;
     private MenuItem listadoOrdenesMenuIt, crudMenuIt;
-    private Button listadoBtn;
-    private Button crudBtn;
 
     public DashBoard(Stage stage) {
         dashbStage = stage;
@@ -61,18 +61,28 @@ public class DashBoard {
 
     private HBox crearSemanasChart() {
         HBox semanaChartContainer = new HBox();
-        Text dummyText = new Text("Soy el chart de semanas");
         semanaChartContainer.setId("semana-chart-container");
-        semanaChartContainer.getChildren().add(dummyText);
+
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        BarChart<String,Number> compararSemanaBarChart = new BarChart<String,Number>(xAxis,yAxis);
+        compararSemanaBarChart.setTitle("Comparativa semana actual VS. semana anterior");
+        yAxis.setLabel("Total Pedidos");
+        compararSemanaBarChart.setData(dashboardDAO.compararSemanaAnterior());
+        semanaChartContainer.getChildren().add(compararSemanaBarChart);
+
         return semanaChartContainer;
 
     }
 
     private HBox crearPlatillosChart() {
         HBox platilloChartContainer = new HBox();
-        Text dummyText = new Text("Soy el chart de platillos");
+
         platilloChartContainer.setId("platillo-chart-container");
-        platilloChartContainer.getChildren().add(dummyText);
+        PieChart platillosPieChart = new PieChart(dashboardDAO.platilloPerMes());
+        platillosPieChart.setTitle("Platillos pedidos en el mes de " + mesActual().toUpperCase());
+        platilloChartContainer.getChildren().add(platillosPieChart);
+
         return platilloChartContainer;
     }
 
@@ -82,5 +92,24 @@ public class DashBoard {
 
     private void listarDia() {
         new Lista();
+    }
+
+    public String mesActual() {
+        Calendar now = Calendar.getInstance();
+        // Array con los meses del año
+        String[] strMonths = new String[]{
+                "Enero",
+                "Febebro",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"};
+        return strMonths[now.get(Calendar.MONTH)];
     }
 }
