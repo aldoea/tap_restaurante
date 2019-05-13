@@ -7,12 +7,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import sample.Login;
 import sample.Modelos.OrdenDAO;
 import sample.Modelos.UsuarioDAO;
-import sample.Vistas.DashBoard;
 
 import java.util.Optional;
 
@@ -98,7 +96,7 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
             if (dialogButton == loginButtonType) {
                 return new Pair<>(username.getText(), password.getText());
             }
-            return null;
+            return new Pair<>(username.getText(), password.getText());
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();

@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class OrdenDAO {
     private int idOrden;
@@ -164,6 +163,7 @@ public class OrdenDAO {
                 ticket = ticket + res.getDouble("precio");
                 ticket = ticket + "\n";
             }
+            ticket = ticket + "---------------------------------- \n";
             ticket = ticket + "Total: " + total(mesa);
         } catch (Exception e) {
             System.out.println("Error ticket");
@@ -188,19 +188,18 @@ public class OrdenDAO {
         OrdenDAO objODAO = null;
 
         String consulta = "SELECT * FROM orden where fecha=" + "\"" + LocalDate.now() + "\"";
-        System.out.println(consulta);
         try {
             Statement stmt = Conexion.con.createStatement();
             ResultSet res = stmt.executeQuery(consulta);
             while (res.next()) {
                 objODAO = new OrdenDAO();
 
+                objODAO.idMesa = res.getInt("idMesa");
                 objODAO.idPlatillo = res.getInt("idPlatillo");
                 objODAO.idOrden = res.getInt("idOrden");
-                objODAO.idMesa = res.getInt("idMesa");
-                objODAO.estado = res.getString("estado");
                 objODAO.fecha = res.getString("fecha");
                 objODAO.precio = res.getDouble("precio");
+                objODAO.estado = res.getString("estado");
                 objODAO.idMesero = res.getInt("idMesero");
                 lista.add(objODAO);
             }
