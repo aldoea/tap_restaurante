@@ -96,7 +96,7 @@ public class ButtonCell extends TableCell<OrdenDAO, String> {
             if (dialogButton == loginButtonType) {
                 return new Pair<>(username.getText(), password.getText());
             }
-            return new Pair<>(username.getText(), password.getText());
+            return new Pair<>("", "");
         });
 
         Optional<Pair<String, String>> result = dialog.showAndWait();
