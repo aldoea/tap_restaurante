@@ -1,23 +1,50 @@
 #charts-container {
-    -fx-background-color: skyblue;
+    -fx-background-color: transparent;
     -fx-max-height: 400px;
     -fx-alignment: top-center;
 }
 
 #semana-chart-container {
-    -fx-background-color: yellow;
+    -fx-background-color: whitesmoke;
     -fx-pref-width: 650px;
     -fx-pref-height: 200px;
     -fx-alignment: center;
 }
 
 #platillo-chart-container {
-    -fx-background-color: orange;
+    -fx-background-color: darkgray;
     -fx-pref-width: 650px;
     -fx-pref-height: 200px;
     -fx-alignment: center;
 }
 
+#tbv-container {
+    -fx-padding: 25px;
+}
+
+#agregar-container {
+    -fx-background-color: transparent;
+    -fx-alignment: center-right;
+    -fx-padding: 25px 25px 25px 0;
+}
+
+#form-container {
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 15px;
+}
+
+#main-header-label {
+    -fx-font-family: 'Roboto';
+    -fx-font-weight: bolder;
+    -fx-font-size: 30px;
+    -fx-max-width: infinity;
+}
+
 .root {
-    -fx-background-color: seagreen;
+    -fx-background-color: #e2e2d9;
+}
+
+.crud-footer {
+    -fx-background-color: floralwhite;
 }

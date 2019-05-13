@@ -1,5 +1,9 @@
 package sample.Modelos;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import sample.Vistas.Platillo;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -128,6 +132,77 @@ public class PlatilloDAO {
         }
 
         return null;
+    }
+
+    public void insertar() {
+        String query = "INSERT INTO platillo(" +
+                "nombrePlatillo," +
+                "precio," +
+                "descripcionPlatillo," +
+                "imagen," +
+                "idCategoria)" +
+                " values(" +
+                "'" + nombrePlatillo + "'," +
+                precio + "," +
+                "'" + descripcionPlatillo + "', " +
+                "'" + imagen + "', " +
+                idCategoria + ")";
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            stmt.execute(query);
+        }catch (Exception e) {
+            System.err.println("An error happens" + e);
+        }
+    }
+
+    public void actualizar() {
+        String query = "UPDATE platillo SET " +
+                "nombrePlatillo = '"+nombrePlatillo+"', " +
+                "precio = "+precio+"," +
+                "descripcionPlatillo = '"+descripcionPlatillo+"'," +
+                "imagen='"+imagen+"'," +
+                "idCategoria="+idCategoria+" " +
+                "WHERE" +
+                " idPlatillo = "+idPlatillo;
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            stmt.execute(query);
+        }catch (Exception e) {
+            System.err.println("An error happens" + e.toString());
+        }
+    }
+
+    public ObservableList<PlatilloDAO> seleccionar() {
+        ObservableList<PlatilloDAO> lista = FXCollections.observableArrayList();
+        PlatilloDAO objPDAO = null;
+        String query = "SELECT * FROM platillo ORDER BY nombrePlatillo";
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()){
+                objPDAO = new PlatilloDAO();
+                objPDAO.idPlatillo = res.getInt("idPlatillo");
+                objPDAO.nombrePlatillo = res.getString("nombrePlatillo");
+                objPDAO.precio = res.getInt("precio");
+                objPDAO.descripcionPlatillo = res.getString("descripcionPlatillo");
+                objPDAO.imagen = res.getString("imagen");
+                objPDAO.idCategoria = res.getInt("idCategoria");
+                lista.add(objPDAO);
+            }
+        }catch (Exception e) {
+            System.err.println("An error happens" + e.toString());
+        }
+        return lista;
+    }
+
+    public void eliminar() {
+        String query = "DELETE FROM platillo WHERE idPlatillo=" + idPlatillo;
+        try{
+            Statement stmt = Conexion.con.createStatement();
+            stmt.execute(query);
+        }catch (Exception e) {
+            System.err.println("An error happens" + e.toString());
+        }
     }
 }
 

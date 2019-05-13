@@ -26,13 +26,15 @@ public class Lista extends Stage {
         VBox vBox = new VBox();
         tablaDia = new TableView<>();
         vBox.getChildren().addAll(pDia());
-        escena = new Scene(vBox, 700, 200);
+        vBox.setStyle("-fx-padding: 25px");
+        escena = new Scene(vBox, 500, 500);
+        escena.getStylesheets().add(getClass().getResource("../CSS/bootstrap3.css").toExternalForm());
+        escena.getStylesheets().add(getClass().getResource("../CSS/dashboard.css").toExternalForm());
     }
 
     private TableView<OrdenDAO> pDia() {
         dia.addAll(new OrdenDAO().OrdenDia());
         tablaDia = new TableView<>();
-
         TableColumn<OrdenDAO, Integer> tbcPlatillo = new TableColumn<>("Platillo");
         tbcPlatillo.setCellValueFactory(new PropertyValueFactory<>("idPlatillo"));
 

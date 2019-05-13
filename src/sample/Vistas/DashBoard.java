@@ -8,6 +8,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import sample.Login;
 import sample.Modelos.dashboardDAO;
 
 import java.util.Calendar;
@@ -18,10 +19,11 @@ public class DashBoard {
     private Scene mainScene;
     private MenuBar menuBar;
     private Menu administradorMenu;
-    private MenuItem listadoOrdenesMenuIt, crudMenuIt;
-
+    private MenuItem listadoOrdenesMenuIt, crudMenuIt, cerrarSesion;
+    private Stage thisStage;
     public DashBoard(Stage stage) {
         dashbStage = stage;
+        thisStage = dashbStage;
         CrearUI();
     }
 
@@ -46,8 +48,10 @@ public class DashBoard {
         crudMenuIt = new MenuItem("Administrar Catálogos");
         listadoOrdenesMenuIt.setOnAction(event -> listarDia());
         crudMenuIt.setOnAction(event -> crudTrigger());
+        cerrarSesion = new MenuItem("Cerrar Sesión");
+        cerrarSesion.setOnAction(event -> Regresar() );
 
-        administradorMenu.getItems().addAll(listadoOrdenesMenuIt, crudMenuIt);
+        administradorMenu.getItems().addAll(listadoOrdenesMenuIt, crudMenuIt, cerrarSesion);
         menuBar.getMenus().add(administradorMenu);
         return menuBar;
     }
@@ -111,5 +115,9 @@ public class DashBoard {
                 "Noviembre",
                 "Diciembre"};
         return strMonths[now.get(Calendar.MONTH)];
+    }
+
+    private void Regresar() {
+        new Login(thisStage);
     }
 }
